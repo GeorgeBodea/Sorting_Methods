@@ -272,10 +272,10 @@ public class ProiectSortari {
     }
 
     /*
-     FoartePutineMici: 10 de numere intre 0 si 100
-     Putine identice: 100 de 5
-     PutineMici: 1_000 de numere intre 0 - 1_000
-     PutineMari: 1_000 de numere intre 0 - 1_000_000_000
+     FoartePutineMici: 10 numbers between 0 and 100
+     Putine identice: 100 of 5
+     PutineMici: 1_000 numbers between 0 - 1_000
+     PutineMari: 1_000 numbers between 0 - 1_000_000_000
 
      */
 }
