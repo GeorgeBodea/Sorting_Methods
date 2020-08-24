@@ -96,56 +96,29 @@ public class ProiectSortari {
         }
     }
 
-    private static int choosePivot(ArrayList<Integer> array, int left, int right) {
 
-        Random random = new Random();
-        int[] poz = new int[4];
-        for (int i = 1; i < 4; i++) {
-            poz[i] = random.nextInt((right - left) + 1) + left;
-            poz[i] = array.get(poz[i]);
-        }
-
-        int medium;
-        if ((poz[1] <= poz[2] && poz[2] <= poz[3]) || (poz[1] >= poz[2] && poz[2] >= poz[3]))
-            return poz[2];
-        else if ((poz[2] >= poz[1] && poz[1] >= poz[3]) || (poz[2] <= poz[1] && poz[1] <= poz[3]))
-            return poz[1];
-        else return poz[3];
+    public static void quickSortClassic(ArrayList<Integer> array) {
+        qckSortClassic(array, 0, array.size()-1);
     }
 
-    private static int partition(ArrayList<Integer> array, int left, int right) {
+    private static void qckSortClassic(ArrayList<Integer> array, int l, int r) {
+        if (l < r) {
+            int pivotPos = partitionClassic(array, l, r);
+            qckSortClassic(array, l, pivotPos - 1);
+            qckSortClassic(array, pivotPos + 1, r);
+        }
+    }
 
-        int i = left;
-        int j = right;
-        int pivot = choosePivot(array, left, right); // Could be adjusted
-        while (i < j) {
-
-            while (i < right && array.get(i) <= pivot) {
+    private static int partitionClassic(ArrayList<Integer> array, int l, int r) {
+        int pivot = array.get(r);
+        int i = l - 1;
+        for (int j = l; j < r; j++)
+            if (array.get(j) < pivot) {
                 i++;
-            }
-
-            while (j > left && pivot < array.get(j)) {
-                j--;
-            }
-
-            if (i < j)
                 Collections.swap(array, i, j);
-        }
-        Collections.swap(array, left, j);
-        return j;
-    }
-
-    public static void qckSort(ArrayList<Integer> array, int left, int right) {
-
-        if (left < right) {
-            int poz = partition(array, left, right);
-            qckSort(array, left, poz - 1); // Nu era poz simplu ???
-            qckSort(array, poz + 1, right);
-        }
-    }
-
-    public static void quickSort(ArrayList<Integer> array) {
-        qckSort(array, 0, array.size() - 1);
+            }
+        Collections.swap(array, i + 1, r);
+        return i + 1;
     }
 
     public static void countingSort(ArrayList<Integer> array) {
@@ -179,7 +152,7 @@ public class ProiectSortari {
 
         // We first find out the maximum number
         int max = 0;
-        for (int i = 0; i<array.size(); i++)
+        for (int i = 0; i < array.size(); i++)
             if (array.get(i) > max)
                 max = array.get(i);
 
@@ -193,12 +166,12 @@ public class ProiectSortari {
         // We need a vector for 256 (2^8) vectors;
         int mask = (1 << 8) - 1;
         Vector<Vector<Integer>> bucket = new Vector<>();
-        for (int i = 0; i < 256; i++){
+        for (int i = 0; i < 256; i++) {
             Vector<Integer> vector = new Vector<>();
             bucket.add(vector);
         }
         int stepLevel = 0;
-        for (int i = 0; i < steps; i++){
+        for (int i = 0; i < steps; i++) {
             for (int j = 0; j < array.size(); j++)
                 bucket.get((array.get(j) >> stepLevel) & mask).add(array.get(j));
             int nr = 0;
@@ -263,7 +236,7 @@ public class ProiectSortari {
                 analyzeMethod(array, sortedArray, "bubbleSort");
             analyzeMethod(array, sortedArray, "mergeSort");
             analyzeMethod(array, sortedArray, "insertionSort");
-            analyzeMethod(array, sortedArray, "quickSort");
+            analyzeMethod(array, sortedArray, "quickSortClassic");
             if (max < 10_000_000)
                 analyzeMethod(array, sortedArray, "countingSort");
             analyzeMethod(array, sortedArray, "radixSort");
@@ -272,10 +245,10 @@ public class ProiectSortari {
     }
 
     /*
-     FoartePutineMici: 10 numbers between 0 and 100
-     Putine identice: 100 of 5
-     PutineMici: 1_000 numbers between 0 - 1_000
-     PutineMari: 1_000 numbers between 0 - 1_000_000_000
+     FoartePutineMici: 10 de numere intre 0 si 100
+     Putine identice: 100 de 5
+     PutineMici: 1_000 de numere intre 0 - 1_000
+     PutineMari: 1_000 de numere intre 0 - 1_000_000_000
 
      */
 }
