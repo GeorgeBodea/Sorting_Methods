@@ -110,6 +110,7 @@ public class ProiectSortari {
     }
 
     private static int partitionClassic(ArrayList<Integer> array, int l, int r) {
+        pushLastPivot(array, l, r);
         int pivot = array.get(r);
         int i = l - 1;
         for (int j = l; j < r; j++)
@@ -119,6 +120,22 @@ public class ProiectSortari {
             }
         Collections.swap(array, i + 1, r);
         return i + 1;
+    }
+
+    private static void pushLastPivot(ArrayList<Integer> array, int l, int r) {
+        Random random = new Random();
+        int pos1 = random.nextInt(r - l + 1) + l;
+        int pos2 = random.nextInt(r - l + 1) + l;
+        int pos3 = random.nextInt(r - l + 1) + l;
+        int retainPos;
+
+        if (pos2 <= pos1 && pos1 <= pos3)
+            retainPos = pos1;
+        else if (pos1 <= pos2 && pos2 <= pos3)
+            retainPos = pos2;
+        else retainPos = pos3;
+
+        Collections.swap(array, r, retainPos);
     }
 
     public static void countingSort(ArrayList<Integer> array) {
@@ -186,6 +203,7 @@ public class ProiectSortari {
             stepLevel += 8;
         }
     }
+    
 
     public static void analyzeMethod(ArrayList<Integer> array, ArrayList<Integer> sortedArray, String nameOfMethod) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
